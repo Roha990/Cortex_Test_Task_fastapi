@@ -1,0 +1,25 @@
+{% extends "./basic.html" %}
+{% block title %}Редактировать должность{% endblock %}
+{% block content %}
+<h2>Форма добавление сотрудника</h2>
+<form method = "post">
+        <label for="last_name">Фамилия сотрудника</label>
+        <input type="text" name="last_name" required><br>
+        <label for="first_name">Имя сотрудника</label>
+        <input type="text" name="first_name"><br>
+        <label for="middle_name">Отчество сотрудника</label>
+        <input type="text" name="middle_name"><br>
+        <label for="position_id">Должность</label>
+        <select name="position_id" id="position_id">
+                {%for position in positions%}
+                <option value="{{position.id}}">{{position.title}}</option>
+                {%endfor%}
+        </select>
+        <br>
+        <label for="hire_date">Дата принятия на работу</label>
+        <input type="date" name="hire_date" id="hire_date">
+        <br><br>
+        <input type="submit" value="Отправить">
+</form>
+
+{% endblock %}

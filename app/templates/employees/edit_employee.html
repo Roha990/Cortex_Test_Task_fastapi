@@ -1,0 +1,62 @@
+{% extends "./basic.html" %}
+{% block title %}Редактировать должность{% endblock %}
+{% block content %}
+<h2>Форма редактирования сотрудника</h2>
+<form method = "post">
+        <label for="last_name">Фамилия сотрудника</label>
+        <input type="text" name="last_name" id="last_name" value="{{employee.last_name}}" required><br>
+        <label for="first_name">Имя сотрудника</label>
+        <input type="text" id="first_name" name="first_name" value="{{employee.first_name}}" required><br>
+        <label for="middle_name">Отчество сотрудника</label>
+        <input type="text" id="middle_name" name="middle_name" value="{{employee.middle_name}}"><br>
+        <label for="position_id">Должность</label>
+        <select name="position_id" id="position_id" required>
+                {%for position in positions%}
+                <option selected="employee.position_id" value="{{position.id}}">{{position.title}}</option>
+                {%endfor%}
+        </select>
+        <br>
+        <label for="hire_date">Дата принятия на работу</label>
+        <input type="date" name="hire_date" id="hire_date" required>
+        <br><br>
+        <button type="button" onclick="UpdateEmployee({{employee.id}})">Обновить</button>
+</form>
+
+
+<script>
+    async function UpdateEmployee(id) {
+        const lastName = document.getElementById("last_name").value;
+        const firstName = document.getElementById("first_name").value;
+        const middleName = document.getElementById("middle_name").value;
+        const positionId = document.getElementById("position_id").value;
+        const hireDate = document.getElementById("hire_date").value;
+        const formData = new FormData();
+        formData.append("last_name", lastName);
+        formData.append("first_name", firstName);
+        formData.append("middle_name", middleName);
+        formData.append("position_id", positionId);
+        formData.append("hire_date", hireDate);
+        const response = await fetch(`/employee/update/${id}`, {
+            method: "PUT",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams(formData).toString(),
+        });
+        var pattern = /[.,\/#!$%\^&\*;:{}=\-_`~()0-9\s]/;
+        if (pattern.test(firstName)==false) {
+            window.location.href = '/employee/get';
+    }
+    if (pattern.test(middle_name)==false) {
+            window.location.href = '/employee/get';
+    }
+        if (pattern.test(lastName)==false) {
+            window.location.href = '/employee/get';
+    } else{
+    window.location.href = '/error';
+    }
+}
+
+</script>
+{% endblock %}

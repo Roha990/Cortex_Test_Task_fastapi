@@ -1,0 +1,11 @@
+{% extends "./basic.html" %}
+{% block title %}Редактировать должность{% endblock %}
+{% block content %}
+<h2>Форма добавление должности</h2>
+<form method = "post">
+        <label for="position_name">Название должности</label>
+        <input type="text" name="position_name" required><br>
+        <input type="submit" value="Отправить">
+</form>
+
+{% endblock %}

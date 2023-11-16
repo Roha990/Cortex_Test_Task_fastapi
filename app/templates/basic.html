@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<header>
+    <nav>
+        <a href="{{ url_for('get_employees') }}">Работники</a>
+        <a href="{{ url_for('get_positions') }}">Должности</a>
+    </nav>
+    <br>
+</header>
+
+<body>
+{% block content %}
+{%endblock%}
+</body>
+</html>

@@ -1,0 +1,42 @@
+{% extends "./basic.html" %}
+{% block title %}Работники{% endblock %}
+{% block content %}
+<a href="{{ url_for('get_form_add_employee') }}">Добавить работника</a>
+    <table>
+          <colgroup>
+              <col span="3" style="background:Khaki">
+              <col span="2" style="background-color:LightCyan">
+              <col span="1" style="background-color:green">
+              <col span="1" style="background-color:red">
+          </colgroup>
+        <tr>
+            <th>Фамилия сотрудника</th>
+            <th>Имя сотрудника</th>
+            <th>Отчество сотрудника</th>
+            <th>Должность сотрудника</th>
+            <th>Дата принятия на работу сотрудника</th>
+        </tr>
+        {%for employee in employees%}
+        <tr>
+            <td>{{employee.last_name}}</td>
+            <td>{{employee.first_name}}</td>
+            <td>{{employee.middle_name}}</td>
+            <td>{{employee.position.title}}</td>
+            <td>{{employee.hire_date}}</td>
+            <td><a href="{{ url_for('get_form_edit_employee', employee_id=employee.id) }}">Редактировать</a></td>
+            <td><button onclick="deleteUser({{employee.id}})">Удалить</button></td>
+        </tr>
+        {%endfor%}
+    </table>
+<script>
+        async function deleteUser(id) {
+            const response = await fetch(`/employee/delete/${id}`, {
+                method: "DELETE",
+                headers: { "Accept": "application/json" }
+            });
+            location.reload();
+        }
+
+</script>
+{% endblock %}
+
